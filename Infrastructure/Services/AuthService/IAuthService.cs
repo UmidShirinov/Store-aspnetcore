@@ -4,7 +4,7 @@ namespace Core.Services.AuthService
 {
 	public interface IAuthService
 	{
-		Task<string> AuthenticateAsync(string email, string password);
-		Task RegisterAsync(UserDto userDto);
+		public string GenerateTokemn(string username, int userId);
+		public bool ValidateToken(string token);
 	}
 }

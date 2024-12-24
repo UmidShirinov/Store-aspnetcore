@@ -1,10 +1,10 @@
 ﻿using Core.Entities;
 using Core.Repositories.Repository;
 
-namespace Core.Repositories.BasketRepository
+namespace Infrastructure.Repositories.BasketItemRepository
 {
-	public interface IBasketRepository : IRepository<Basket>
+	public interface IBasketRepository:IRepository<Basket>
 	{
-		Task<Basket> GetBasketByUserIdAsync(int userId);
+		Task<Basket> GetBasketWithItemAsync(int basketId);
 	}
 }
