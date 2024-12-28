@@ -1,4 +1,4 @@
-﻿namespace Core.Dtos
+﻿namespace Core.Dtos.AuthDtos
 {
 	public class LoginDto
 	{

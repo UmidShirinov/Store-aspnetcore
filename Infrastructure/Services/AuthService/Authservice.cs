@@ -31,7 +31,7 @@ namespace Infrastructure.Services.AuthService
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
 
-			var credential = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
+			var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 			var token = new JwtSecurityToken(
 				issuer: issuer,
@@ -42,12 +42,35 @@ namespace Infrastructure.Services.AuthService
 				);
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
-			
+
 		}
 
 		public bool ValidateToken(string token)
 		{
-			return true;
+			var tokenHandler = new JwtSecurityTokenHandler();
+			var key = Encoding.UTF8.GetBytes(token);
+
+			try
+			{
+				var validationParameters = new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(key),
+					ValidateIssuer = true, // İstəyə bağlı yoxlama
+					ValidateAudience = true, // İstəyə bağlı yoxlama
+					ValidateLifetime = true, // Token müddətini yoxlayır
+					ClockSkew = TimeSpan.Zero // Saat fərqi üçün tənzimləmə
+				};
+
+				tokenHandler.ValidateTokenAsync(token, validationParameters);
+				return true;
+			}
+			catch (Exception )
+			{
+
+				
+				return false;
+			}
 		}
 	}
 }
