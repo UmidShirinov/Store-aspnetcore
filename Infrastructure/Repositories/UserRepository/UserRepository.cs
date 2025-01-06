@@ -18,5 +18,10 @@ namespace Core.Repositories.UserRepository
 		{
 			return await  _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 		}
+
+		public async Task<bool> IsEmailTaken(string email)
+		{
+			return await _context.Users.AnyAsync(x => x.Email == email);
+		}
 	}
 }

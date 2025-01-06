@@ -5,6 +5,6 @@ namespace Infrastructure.Repositories.BasketItemRepository
 {
 	public interface IBasketRepository:IRepository<Basket>
 	{
-		Task<Basket> GetBasketWithItemAsync(int basketId);
+		Task<Basket> GetBasketWithItemByBasketIdAsync(int basketId);
 	}
 }

@@ -18,10 +18,10 @@ namespace Infrastructure.Services.AuthService
 		{
 			_configuration = configuration;
 			securityKey = _configuration["Jwt:SecretKey"];
-			issuer = configuration["Jwt:Issuer"];
-			audience = configuration["Jwt:Audience"];
+			issuer =_configuration["Jwt:Issuer"];
+			audience = _configuration["Jwt:Audience"];
 		}
-		public string GenerateTokemn(string username, int userId)
+		public string GenerateToken(string username, int userId)
 		{
 			var claims = new List<Claim>
 			{
@@ -45,10 +45,11 @@ namespace Infrastructure.Services.AuthService
 
 		}
 
-		public bool ValidateToken(string token)
+
+		public   bool ValidateToken(string token)
 		{
 			var tokenHandler = new JwtSecurityTokenHandler();
-			var key = Encoding.UTF8.GetBytes(token);
+			var key = Encoding.UTF8.GetBytes(securityKey);
 
 			try
 			{

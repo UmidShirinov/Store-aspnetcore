@@ -11,7 +11,7 @@ namespace Core.Services.UnitOfWork
 {
 	public interface IUnitOfWork : IDisposable
 	{
-		IRepository<User> Users { get; }
+		IUserRepository Users { get; }
 		IRepository<Product> Products { get; }
 		IRepository<Category> Categories { get; }
 		IRepository<Order> Orders { get; }

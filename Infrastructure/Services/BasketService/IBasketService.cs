@@ -1,4 +1,4 @@
-﻿using Core.Dtos;
+﻿using Core.Dtos.BasketDtos;
 
 namespace Core.Services.BasketService
 {
@@ -6,6 +6,6 @@ namespace Core.Services.BasketService
 	{
 		Task AddToBasketAsync(int userId, int productId, int quantity);
 		Task RemoveFromBasketAsync(int userId, int productId);
-		Task<BasketDto> GetBasketAsync(int userId);
+		Task<GetBasketDto> GetBasketAsync(int userId);
 	}
 }

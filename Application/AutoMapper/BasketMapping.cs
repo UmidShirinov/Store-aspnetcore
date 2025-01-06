@@ -10,7 +10,7 @@ namespace Application.AutoMapper
 		{
 			CreateMap<AddToBasketDto, Basket>();
 			CreateMap<RemoveFromBasketDto, Basket>();
-			CreateMap<GetBasketItemsDto, Basket>();
+			CreateMap<GetBasketDto, Basket>();
 		}
 	}
 }

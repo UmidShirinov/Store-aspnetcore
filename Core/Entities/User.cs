@@ -8,7 +8,7 @@ namespace Core.Entities
 		public string Name { get; set; }
 		public string Email { get; set; }
 		public string PasswordHash { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public DateTime CreatedAt { get; set; }= DateTime.Now;
 
 		// Bir istifadəçinin sifarişləri
 		public ICollection<Order> Orders { get; set; }

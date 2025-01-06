@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories.BasketRepository
 			_context = context;
 		}
 
-		public async Task<Basket> GetBasketWithItemAsync(int basketId)
+		public async Task<Basket> GetBasketWithItemByBasketIdAsync(int basketId)
 		{
 			return await _context.Baskets
 				.Include(p => p.BasketItems)

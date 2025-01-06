@@ -9,8 +9,8 @@ namespace Application.AutoMapper
 		public UserMapping()
 		{
 			CreateMap<CreateUserDto, User>();
-			CreateMap<GetUserByIdDto, User>();
-			CreateMap<GetUserDto, User>();
+			CreateMap<GetUserByIdDto, User>().ReverseMap();
+			CreateMap<GetUserDto, User>().ReverseMap();
 			CreateMap<UpdateUserDto, User>();
 		}
 	}

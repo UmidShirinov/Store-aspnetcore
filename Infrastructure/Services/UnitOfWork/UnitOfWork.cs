@@ -20,7 +20,7 @@ namespace Infrastructure.Services.UnitOfWork
 	{
 		private readonly ApplicationDbContext _context;
 
-		public IRepository<User> Users { get; set; }
+		public IUserRepository Users { get; set; }
 		public IRepository<Product> Products { get; set; }
 		public IRepository<Category> Categories { get; set; }
 		public IRepository<Order> Orders { get; set; }
@@ -33,7 +33,7 @@ namespace Infrastructure.Services.UnitOfWork
 		public UnitOfWork(ApplicationDbContext context)
 		{
 			_context = context;
-			Users = new Repository<User>(_context);
+			Users = new UserRepository(_context);
 			Products = new Repository<Product>(_context);
 			Categories = new Repository<Category>(_context);
 			Orders = new Repository<Order>(_context);
