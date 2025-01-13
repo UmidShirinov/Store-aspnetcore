@@ -18,6 +18,8 @@ namespace Core.Services.UnitOfWork
 		IRepository<OrderItem> OrderItems { get; }
 		IRepository<Basket> Baskets { get; }
 		IRepository<BasketItem> BasketItems  { get; }
+		IRepository<Token> Tokens { get; }
+
 		Task<int> SaveChangesAsync();
 	}
 }

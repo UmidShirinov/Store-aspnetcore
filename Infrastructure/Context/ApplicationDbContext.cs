@@ -15,7 +15,7 @@ namespace Infrastructure.Contex
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderItem> OrderItems { get; set; }
 		public DbSet<Payment> Payment { get; set; }
-
+		public DbSet<Token> Tokens { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
@@ -25,6 +25,8 @@ namespace Infrastructure.Contex
 				.WithOne(p => p.User)
 				.HasForeignKey(p => p.UserId)
 				.OnDelete(DeleteBehavior.Restrict); // Restrict instead of Cascade
+
+			modelBuilder.Entity<Token>().HasKey(t => t.Id);
 		}
 
 	}

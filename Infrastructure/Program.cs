@@ -4,6 +4,7 @@ using Core.Repositories.UserRepository;
 using Core.Services.AuthService;
 using Core.Services.UnitOfWork;
 using Infrastructure.Contex;
+using Infrastructure.Repositories.TokenRepository;
 using Infrastructure.Services.AuthService;
 using Infrastructure.Services.PasswordHashService;
 using Infrastructure.Services.UnitOfWork;
@@ -27,6 +28,8 @@ builder.Services.AddScoped<IRepository<Basket>, Repository<Basket>>();
 builder.Services.AddScoped<IRepository<BasketItem>, Repository<BasketItem>>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+
 //builder.Services.AddScoped<IAuthService, Authservice>();
 
 

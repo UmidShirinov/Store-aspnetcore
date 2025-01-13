@@ -10,12 +10,17 @@ using Application.App.Queries.UserQueries.LoginUser;
 using Application.Exceptions;
 using System.Reflection.Metadata.Ecma335;
 using Application.App.Commands.UserCommands.ResetPassword;
+using Microsoft.AspNetCore.Authorization;
+using Application.App.Commands.UserCommands.LogOutUser;
+using Infrastructure.Services.SendEmailService;
+using Application.App.Commands.UserCommands.ForgetPassword;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace StoreWithAspNetCore.Controllers
 {
+
 	[Route("api/[controller]")]
 	[ApiController]
 
@@ -23,14 +28,16 @@ namespace StoreWithAspNetCore.Controllers
 	public class UserController : ControllerBase
 	{
 		private readonly IMediator mediator;
+		private readonly ISendEmailService sendEmailService;
 
-		public UserController(IMediator mediator)
+		public UserController(IMediator mediator, ISendEmailService sendEmailService)
 		{
 			this.mediator = mediator;
+			this.sendEmailService = sendEmailService;
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> UserRegister([FromBody]RegisterUserCommand command)
+		public async Task<IActionResult> UserRegister([FromBody] RegisterUserCommand command)
 		{
 			try
 			{
@@ -42,10 +49,10 @@ namespace StoreWithAspNetCore.Controllers
 
 				return BadRequest(ex.Message);
 			}
-			catch(Exception ex) 
+			catch (Exception ex)
 			{
 
-				return Problem(ex.Message);	
+				return Problem(ex.Message);
 			}
 		}
 
@@ -67,27 +74,28 @@ namespace StoreWithAspNetCore.Controllers
 			}
 		}
 
+		[Authorize]
 		[HttpGet]
 		[Route("{id}")]
 		public async Task<IActionResult> GetUserById(int id)
 		{
 			try
 			{
-				 var result = await mediator.Send(new GetUserByIdQuery { Id = id });
+				var result = await mediator.Send(new GetUserByIdQuery { Id = id });
 				if (result != null)
 				{
 					Response response = new Response() { Result = result, Message = "Success" };
 					return Ok(response);
 				}
-				else { 
-                    Response response = new Response() { Result = "Null", Message = "Success" };
+				else {
+					Response response = new Response() { Result = "Null", Message = "Success" };
 					return NotFound(response);
 				}
 			}
 			catch (Exception ex)
 			{
 
-				return Problem(ex.Message) ;	
+				return Problem(ex.Message);
 			}
 		}
 		[HttpPost("Login")]
@@ -127,6 +135,55 @@ namespace StoreWithAspNetCore.Controllers
 				return Problem(ex.Message);
 			}
 
+		}
+
+
+		[Authorize]
+		[HttpPost("Log-out")]
+		public async Task<IActionResult> LogOut( [FromBody]LogOutUserCommand command)
+		{
+			try
+			{
+				var result = await mediator.Send(command);
+				Response response = new Response()
+				{
+					Result = result,
+					Message = "Success"
+				};
+				return Ok(result);
+
+			}
+			catch (Exception ex)
+			{
+
+				return Problem($"{ex.Message}");
+			}
+			
+
+
+		}
+
+		[HttpPost("forget-password")]
+		public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordCommand command)
+		{
+			try
+			{
+				var result = await mediator.Send(command);
+
+				Response response = new Response()
+				{
+					Result = result,
+					Message = "Success"
+
+				};
+				return Ok(response);
+			}
+			catch (Exception ex)
+			{
+
+				return Problem($"{ex.Message}");
+
+			}
 		}
 	}
 }

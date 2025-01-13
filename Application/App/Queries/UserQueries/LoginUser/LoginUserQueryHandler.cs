@@ -1,4 +1,7 @@
-﻿using Core.Dtos.UserDtos;
+﻿using AutoMapper;
+using Azure.Core;
+using Core.Dtos.UserDtos;
+using Core.Entities;
 using Core.Services.AuthService;
 using Core.Services.UnitOfWork;
 using Infrastructure.Services.PasswordHashService;
@@ -11,6 +14,7 @@ namespace Application.App.Queries.UserQueries.LoginUser
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IPasswordService _passwordService;
 		private readonly IAuthService _authService;
+		private readonly IMapper _mapper;
 		public LoginUserQueryHandler(IUnitOfWork unitOfWork, IPasswordService passwordService, IAuthService authService)
 		{
 			_unitOfWork = unitOfWork;
@@ -26,9 +30,23 @@ namespace Application.App.Queries.UserQueries.LoginUser
 				throw new UnauthorizedAccessException("Email or Password is Wrong");
 			}
 
-			var token = _authService.GenerateToken(user.Name, user.Id);
+			var accessToken = _authService.GenerateToken(user.Name, user.Id);
 
-			return new LoginUserDto { Token = token, UserId = user.Id, UserName = user.Name };
+			var entity = new Token
+			{
+				UserId = user.Id,
+				AccessToken = accessToken,
+				AccessTokenExpiresAt = DateTime.Now.AddHours(2)
+			};
+
+			await _unitOfWork.Tokens.AddAsync(entity);
+			await _unitOfWork.SaveChangesAsync();
+
+			
+
+			return new LoginUserDto { Token = accessToken, UserId = user.Id, UserName = user.Name };
+			
+
 		}
 	}
 }

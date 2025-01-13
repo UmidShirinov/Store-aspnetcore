@@ -10,9 +10,11 @@ using Infrastructure.Contex;
 using Infrastructure.Extentions;
 using Infrastructure.Services.AuthService;
 using Infrastructure.Services.PasswordHashService;
+using Infrastructure.Services.SendEmailService;
 using Infrastructure.Services.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -46,6 +48,8 @@ builder.Services.AddAutoMapper(typeof(RegisterUserCommandHandler).Assembly);
 builder.Services.AddValidatorsFromAssembly(typeof(RegisterUserCommandHandler).Assembly);
 builder.Services.AddScoped<IAuthService, Authservice>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<ISendEmailService, SendEmailService>();
+
 
 var app = builder.Build();
 
@@ -56,6 +60,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

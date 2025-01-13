@@ -27,6 +27,7 @@ namespace Infrastructure.Services.UnitOfWork
 		public IRepository<OrderItem> OrderItems { get; set; }
 		public IRepository<Basket> Baskets { get; set; }
 		public IRepository<BasketItem> BasketItems { get; set; }
+		public IRepository<Token> Tokens { get; set; }
 
 
 
@@ -40,6 +41,7 @@ namespace Infrastructure.Services.UnitOfWork
 			OrderItems = new Repository<OrderItem>(_context);
 			Baskets = new Repository<Basket>(_context);
 			BasketItems = new Repository<BasketItem>(_context);
+			Tokens = new Repository<Token>(_context);
 		}
 
 		//public IRepository<User> Users { get; private set; }

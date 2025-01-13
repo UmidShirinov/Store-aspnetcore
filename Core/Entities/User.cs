@@ -14,7 +14,7 @@ namespace Core.Entities
 		public ICollection<Order> Orders { get; set; }
 		public ICollection<Payment> Payments { get; set; }
 
-		// Bir istifadəçinin profili
+		public Token Token { get; set; }
 
 	}
 }
