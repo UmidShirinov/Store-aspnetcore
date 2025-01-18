@@ -138,7 +138,6 @@ namespace StoreWithAspNetCore.Controllers
 
 		}
 
-
 		[Authorize]
 		[HttpPost("Log-out")]
 		public async Task<IActionResult> LogOut( [FromBody]LogOutUserCommand command)

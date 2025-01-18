@@ -27,6 +27,8 @@ namespace Application.App.Commands.UserCommands.ForgetPassword
 			
 
 			var token = _authService.GenerateToken(request.Email, user.Id);
+
+			Console.WriteLine(token);
 			 var isSend = await _emailSender.SendEmailAsync(request.Email, token);
 			if (isSend) { return "Email gonderildi"; }
 			else

@@ -34,7 +34,6 @@ namespace Application.App.Commands.UserCommands.RegisterUser
 				throw new EmailAlreadyExistsException( "Bu email artiq qeydiyatdan kechirilib");
 			}
 
-			
 			request.PasswordHash = passwordService.Hash(request.PasswordHash);
 			
 			var result = await unitOfWork.Users.AddAsync(mapper.Map<User>(request));
