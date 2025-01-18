@@ -40,14 +40,14 @@ namespace Infrastructure.Services.SendEmailService
 
 
 				var param = new Dictionary<string, string>()
-			{
-				{ "token" , token },
-				{"email" , to},
-			};
+				{
+					{ "token" , token },
+					{"email" , to},
+				};
 				message.To.Add(to);
 				var url = "https://example.com/reset-password";
 				var queryString = QueryHelpers.AddQueryString(url, param);
-				mailBody.AppendFormat($"<p><a href='{0}'>{queryString}</a></p>");
+				mailBody.AppendFormat($"<p><t>{token}</t><a href='{0}'>{queryString}</a></p>");
 
 				message.Body = mailBody.ToString();
 

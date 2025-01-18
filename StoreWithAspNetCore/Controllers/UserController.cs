@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Application.App.Commands.UserCommands.LogOutUser;
 using Infrastructure.Services.SendEmailService;
 using Application.App.Commands.UserCommands.ForgetPassword;
+using Application.App.Queries.UserQueries.TokenValidityUser;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -184,6 +185,30 @@ namespace StoreWithAspNetCore.Controllers
 				return Problem($"{ex.Message}");
 
 			}
+		}
+
+		[HttpPost("token-validate")]
+		public async Task <IActionResult> ValidateToken([FromBody] TokenValidityQuery query)
+		{
+			try
+			{
+				var result = await mediator.Send(query);
+				Response response = new Response()
+				{
+					Result = result,
+					Message = "Success"
+				};
+				return Ok(response);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+				
+			}
+
+
+
+			
 		}
 	}
 }
