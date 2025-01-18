@@ -10,7 +10,7 @@ namespace Application.AutoMapper
 		{
 			CreateMap<CreateCategoryDto, Category>();
 			CreateMap<UpdateCategoryDto, Category>();
-			CreateMap<GetCategoryDto, Category>();
+			CreateMap<Category, GetCategoryDto>().ReverseMap();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Application.App.Commands.CategoryCommands.CreateCommand;
+using Application.App.Queries.CategoryQuery.GetCategories;
 using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,26 @@ namespace StoreWithAspNetCore.Controllers
 
 				};
 
+				return Ok(response);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+		}
+
+		[HttpGet("get-all-categories")]
+		public async Task<IActionResult> GetCategories()
+		{
+			try
+			{
+				var result = await mediator.Send(new GetCategoryQuery { });
+				Response response = new Response()
+				{
+					Result = result,
+					Message = "Sucess"
+				};
 				return Ok(response);
 			}
 			catch (Exception ex)
